@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% load thumbnail %}
+{% block title %}
+    {{ graduate.last_name }} 
+    {{ graduate.first_name }} 
+    {{ graduate.patronym }}
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/pages/single.css' %}">
+{% endblock css %}
+{% block header %}
+    {% include "includes/navbar.html" %}
+{% endblock header %}
+{% block content %}
+    <div class="single-card" data-id="{{ graduate.id }}" data-author="{{ graduate.id }}">
+        {% thumbnail graduate.photo "1080x1080" crop="center" upscale=True as im %}
+            <img src="{{ im.url }}" alt="Фото выпускника" class="single-card__image">
+        {% endthumbnail %}
+        <div class="single-card__info">
+            <div class="single-card__header-info">
+                <h1 class="single-card__title">
+                    {{ graduate.first_name }} 
+                    {{ graduate.last_name }} 
+                    {% if graduate.patronym %}
+                        {{ graduate.patronym }}
+                    {% endif %}
+                </h1>
+            </div>
+            <div class="single-card__items single-card__items_column">
+                <p class="single-card__text"><span class="icon-time"></span> Выпуск {{ graduate.graduated }} года</p>
+            </div>
+            {% if graduate.faculty %}
+                <div class="single-card__section">
+                    <h3 class="single-card__section-title">Факультет:</h3>
+                    <p class=" single-card__section-text">{{ graduate.faculty }}</p>
+                </div>
+            {% endif %}
+            {% if graduate.cafedra %}
+                <div class="single-card__section">
+                    <h3 class="single-card__section-title">Кафедра:</h3>
+                    <p class=" single-card__section-text">{{ graduate.cafedra }}</p>
+                </div>
+            {% endif %}
+            {% if graduate.career %}
+                <div class="single-card__section">
+                    <h3 class="single-card__section-title">Карьера:</h3>
+                    <p class=" single-card__section-text">{{ graduate.career }}</p>
+                </div>
+            {% endif %}
+            {% if graduate.contacts %}
+                <div class="single-card__section">
+                    <h3 class="single-card__section-title">Контакты:</h3>
+                    <p class=" single-card__section-text">{{ graduate.contacts|linebreaksbr }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
+{% block js %}
+    <script src="{% static 'js/components/MainCards.js' %}"></script>
+    <script src="{% static 'js/components/SingleCard.js' %}"></script>
+
+    <script src="{% static 'js/config/config.js' %}"></script>
+    <script src="{% static 'js/components/Header.js' %}"></script>
+
+    <script src="{% static 'js/api/Api.js' %}"></script>
+    <script src="{% static 'js/template/singlePage.js' %}"></script>
+    <script src="{% static 'js/template/singlePageNotAuth.js' %}"></script>
+{% endblock js %}

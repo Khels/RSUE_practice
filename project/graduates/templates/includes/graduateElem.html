@@ -1,0 +1,18 @@
+{% load static %}
+{% load thumbnail %}
+<div class="card" data-id="120">
+    <a href="{% url 'graduate_view' graduate.id %}" class="link" target="_blank">
+        {% thumbnail graduate.photo "960x960" crop="top" upscale=True as im %}
+            <img src="{{ im.url }}" alt="Фото выпускника" class="card__image">
+        {% endthumbnail %}
+    </a>
+    <div class="card__body">
+        <a class="card__title link" href="{% url 'graduate_view' graduate.id %}" target="_blank">{{ graduate.get_fullname }}</a>
+        <div class="card__items card__items_column">
+            <p class="card__text"><span class="icon-time"></span> Выпуск {{ graduate.graduated }} года</p>
+            {% if graduate.career %}
+                <p class="card__text"><span class="icon-user"></span> {{ graduate.get_career }}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
